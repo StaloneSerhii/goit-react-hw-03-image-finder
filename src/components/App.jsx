@@ -6,28 +6,24 @@ import { GaleryImg } from './ImageGallery/ImageGallery';
 
 export class App extends Component {
   state = {
-    cards: [],
+    card: [],
     page: 1,
     inputValue: null,
    };
 
-   componentDidUpdate(prevProps, prevStat) {
-      fetchData("car", 1)
-        .then(cards => this.setState({ card: cards }))
-        .catch(error => console.log(error))
-        .finally(() => this.setState({ isLoading: true }))
-    }
-
     FindPicteru= e => {
-      console.log(e);
-      
+      fetchData(e.serch, 1)
+      .then(cards => this.setState({ card: [...cards] }))
+      .catch(error => console.log(error))
+      .finally(() => this.setState({ isLoading: true }))
     }
 
   render() {
     return (
       <div>
-      <GaleryImg img={this.state.cards}/>
-        <Serchbar onSubmit={this.FindPicteru} />
+                <Serchbar onSubmit={this.FindPicteru} />
+      <GaleryImg img={this.state.card}/>
+
       </div>
     );
   }
