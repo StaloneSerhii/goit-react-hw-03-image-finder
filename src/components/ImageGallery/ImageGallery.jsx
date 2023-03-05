@@ -1,12 +1,10 @@
 import React from 'react';
+import { ImaageaItems } from 'components/ImageGalleryItem/ImageGalleryItem';
 
 export const GaleryImg = ({ img }) => {
-console.log(img);
   return (
     <ul>
-      {img.map(item => {
-        return<img src={item.largeImageURL} alt='asd' width='400px'/>
-      })}
+      <ImaageaItems propImg={img}/>
     </ul>
   );
 };
