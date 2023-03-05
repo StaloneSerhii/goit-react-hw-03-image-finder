@@ -46,7 +46,8 @@ export class App extends Component {
     return (
       <BasaStyled>
         <Serchbar onSubmit={this.FindPicteru} />
-        {this.state.isLoad === false ? (<GaleryImg img={this.state.card} />) : (<Loader />)}
+        <GaleryImg img={this.state.card} />
+        {this.state.isLoad !== false &&(<Loader />)}
         {this.state.card.length >= 40 && this.state.isLoad === false && <Btn addPages={this.addPages} />} 
       </BasaStyled>
     );
