@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal } from 'components/Modal/Modal';
+import './itemGalery.css'
 
 export class ImaageaItems extends Component{
   state ={
@@ -20,8 +21,8 @@ export class ImaageaItems extends Component{
     <>
       {this.props.propImg.map(item => {
         return (
-          <li  key={item.id}>
-            <img src={item.largeImageURL} alt={item.tags} width="400px" onClick={this.openModal}/>
+          <li className='ImageGalleryItem'  key={item.id}>
+            <img className='ImageGalleryItem-image ' src={item.largeImageURL} alt={item.tags} width="400px" onClick={this.openModal}/>
           </li>
         );
       })}

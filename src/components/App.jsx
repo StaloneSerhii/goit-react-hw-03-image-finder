@@ -5,6 +5,7 @@ import { fetchData } from 'service/api';
 import { GaleryImg } from './ImageGallery/ImageGallery';
 import { Btn } from './Button/Button';
 import { Loader } from './Loader/Loader';
+import { BasaStyled } from './add.styled';
 
 export class App extends Component {
   state = {
@@ -43,11 +44,11 @@ export class App extends Component {
 
   render() {
     return (
-      <div>
+      <BasaStyled>
         <Serchbar onSubmit={this.FindPicteru} />
         {this.state.isLoad === false ? (<GaleryImg img={this.state.card} />) : (<Loader />)}
-        {this.state.card.length > 4 && <Btn addPages={this.addPages} />} 
-      </div>
+        {this.state.card.length >= 40 && this.state.isLoad === false && <Btn addPages={this.addPages} />} 
+      </BasaStyled>
     );
   }
 }

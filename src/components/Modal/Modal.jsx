@@ -13,7 +13,6 @@ export class Modal extends Component {
       }
 
     closeModal = (e)=>{
-        console.log(e);
         this.props.closeModal()
     }
 
