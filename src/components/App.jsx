@@ -13,17 +13,21 @@ export class App extends Component {
   };
 
   componentDidUpdate(prevStat, prevProp) {
-
-    if (prevProp.card !== this.state.card) {
+    if (prevProp.page !== this.state.page) {
       console.log("up");
+
+      fetchData(this.state.inputValue, this.state.page)
+.then(cards => this.setState(preve=>({card: [preve.card, ...cards]})))
+.catch(error => console.log(error))
     }
   }
 
   FindPicteru = e => {
-    fetchData(e.serch, this.state.page)
-      .then(cards => this.setState({ card: [...cards] }))
-      .catch(error => console.log(error))
-      .finally(() => this.setState({ isLoading: true }));
+this.setState(prev=>({inputValue: e.serch}))
+
+fetchData(e.serch, this.state.page)
+.then(cards => this.setState({ card: [...cards] }))
+.catch(error => console.log(error))
   };
 
   addPages =()=>{
