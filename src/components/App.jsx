@@ -4,42 +4,49 @@ import { Serchbar } from './Searchbar/Searchbar';
 import { fetchData } from 'service/api';
 import { GaleryImg } from './ImageGallery/ImageGallery';
 import { Btn } from './Button/Button';
+import { Loader } from './Loader/Loader';
 
 export class App extends Component {
   state = {
     card: [],
     page: 1,
     inputValue: null,
+    isLoad: false,
+    onShow: false
   };
 
   componentDidUpdate(prevStat, prevProp) {
     if (prevProp.page !== this.state.page) {
-      console.log("up");
-
+      this.setState({ isLoad: true });
       fetchData(this.state.inputValue, this.state.page)
-.then(cards => this.setState(preve=>({card: [preve.card, ...cards]})))
-.catch(error => console.log(error))
+        .then(cards =>
+          this.setState(preve => ({
+            card: [...preve.card, ...cards],
+            isLoad: false,
+          }))
+        )
+        .catch(error => console.log(error));
     }
   }
 
   FindPicteru = e => {
-this.setState(prev=>({inputValue: e.serch}))
-
-fetchData(e.serch, this.state.page)
-.then(cards => this.setState({ card: [...cards] }))
-.catch(error => console.log(error))
+    this.setState({ isLoad: true });
+    this.setState(prev => ({ inputValue: e.serch }));
+    fetchData(e.serch, this.state.page)
+      .then(cards => this.setState({ card: [...cards], isLoad: false }))
+      .catch(error => console.log(error));
   };
 
-  addPages =()=>{
-    this.setState(prevStat => ({page:prevStat.page+1}))
-  }
+  addPages = () => {
+    this.setState(prevStat => ({ page: prevStat.page + 1 }));
+  };
 
   render() {
     return (
       <div>
         <Serchbar onSubmit={this.FindPicteru} />
-        <GaleryImg img={this.state.card} />
-        <Btn addPages={this.addPages}/>
+        {this.state.isLoad === false ? (<GaleryImg img={this.state.card} />) : (<Loader />)}
+        {this.state.card.length > 4 && <Btn addPages={this.addPages} />} 
       </div>
     );
   }
