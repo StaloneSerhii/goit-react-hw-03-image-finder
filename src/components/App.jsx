@@ -31,13 +31,16 @@ export class App extends Component {
   }
 
   FindPicteru = e => {
-    this.setState({ isLoad: true });
-    this.setState({ card: [] });
-    this.setState(prev => ({ inputValue: e.serch }));
-    fetchData(e.serch, this.state.page)
-      .then(cards => this.setState({ card: [...cards], isLoad: false }))
-      .catch(error => console.log(error));
-  };
+if (e.serch === '') {
+alert('Enter a search name')
+} else {
+this.setState({ isLoad: true });
+this.setState({ card: [] });
+this.setState(prev => ({ inputValue: e.serch }));
+fetchData(e.serch, this.state.page)
+  .then(cards => this.setState({ card: [...cards], isLoad: false }))
+  .catch(error => console.log(error));
+  }}
 
   addPages = () => {
     this.setState(prevStat => ({ page: prevStat.page + 1 }));
