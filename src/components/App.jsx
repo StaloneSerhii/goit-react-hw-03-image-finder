@@ -32,6 +32,7 @@ export class App extends Component {
 
   FindPicteru = e => {
     this.setState({ isLoad: true });
+    this.setState({ card: [] });
     this.setState(prev => ({ inputValue: e.serch }));
     fetchData(e.serch, this.state.page)
       .then(cards => this.setState({ card: [...cards], isLoad: false }))
@@ -47,7 +48,7 @@ export class App extends Component {
       <BasaStyled>
         <Serchbar onSubmit={this.FindPicteru} />
         <GaleryImg img={this.state.card} />
-        {this.state.isLoad !== false &&(<Loader />)}
+        {this.state.isLoad !== false &&(<Loader/>)}
         {this.state.card.length >= 40 && this.state.isLoad === false && <Btn addPages={this.addPages} />} 
       </BasaStyled>
     );
