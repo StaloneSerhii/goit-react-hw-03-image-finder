@@ -17,16 +17,23 @@ export class App extends Component {
   };
 
   componentDidUpdate(prevStat, prevProp) {
-    if (prevProp.page !== this.state.page || prevProp.inputValue !== this.state.inputValue) {
+    if (
+      prevProp.page !== this.state.page ||
+      prevProp.inputValue !== this.state.inputValue
+    ) {
       this.setState({ isLoad: true });
-
       fetchData(this.state.inputValue, this.state.page)
-        .then(cards => this.setState(preve => ({card: [...preve.card, ...cards],isLoad: false,
-          //  onShow: this.state.page < Math.ceil(cards.totalHits / 12),
+        .then(cards =>
+          this.setState(preve => ({
+            card: [...preve.card, ...cards],
+            onShow: cards.length === 12,
+            isLoad: false
           }))
         )
-        .catch(error => console.log(error));
+        .catch(error => console.log(error))
+       
     }
+    console.log(this.state.isLoad);
   }
 
   FindPicteru = e => {
@@ -54,7 +61,7 @@ export class App extends Component {
         <Serchbar onSubmit={this.FindPicteru} />
         <GaleryImg img={this.state.card} />
         {this.state.isLoad !== false && <Loader />}
-        {this.state.card.length >= 12 && this.state.isLoad === false && (
+        {this.state.onShow === true && this.state.isLoad === false && (
           <Btn addPages={this.addPages} />
         )}
       </BasaStyled>
