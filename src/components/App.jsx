@@ -18,7 +18,7 @@ export class App extends Component {
 
   componentDidUpdate(prevStat, prevProp) {
     if (prevProp.page !== this.state.page) {
-      this.setState({ page: 1 });
+
       this.setState({ isLoad: true });
       fetchData(this.state.inputValue, this.state.page)
         .then(cards =>
@@ -28,18 +28,22 @@ export class App extends Component {
           }))
         )
         .catch(error => console.log(error));
+
     }
+
   }
 
   FindPicteru = e => {
+
 if (e.serch === '') {
 alert('Enter a search name')
 } else {
+  this.setState({ page: 1 });
 this.setState({ isLoad: true });
 this.setState({ card: [] });
 this.setState(prev => ({ inputValue: e.serch }));
 
-fetchData(e.serch, this.state.page)
+fetchData(e.serch, 1)
   .then(cards => this.setState({ card: [...cards], isLoad: false }))
   .catch(error => console.log(error));
   }}
