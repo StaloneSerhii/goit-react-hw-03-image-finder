@@ -18,6 +18,7 @@ export class App extends Component {
 
   componentDidUpdate(prevStat, prevProp) {
     if (prevProp.page !== this.state.page) {
+      this.setState({ page: 1 });
       this.setState({ isLoad: true });
       fetchData(this.state.inputValue, this.state.page)
         .then(cards =>
@@ -35,7 +36,6 @@ if (e.serch === '') {
 alert('Enter a search name')
 } else {
 this.setState({ isLoad: true });
-this.setState({ page: 1 });
 this.setState({ card: [] });
 this.setState(prev => ({ inputValue: e.serch }));
 
