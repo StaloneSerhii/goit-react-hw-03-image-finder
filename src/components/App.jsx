@@ -35,8 +35,10 @@ if (e.serch === '') {
 alert('Enter a search name')
 } else {
 this.setState({ isLoad: true });
+this.setState({ page: 1 });
 this.setState({ card: [] });
 this.setState(prev => ({ inputValue: e.serch }));
+
 fetchData(e.serch, this.state.page)
   .then(cards => this.setState({ card: [...cards], isLoad: false }))
   .catch(error => console.log(error));
@@ -52,7 +54,7 @@ fetchData(e.serch, this.state.page)
         <Serchbar onSubmit={this.FindPicteru} />
         <GaleryImg img={this.state.card} />
         {this.state.isLoad !== false &&(<Loader/>)}
-        {this.state.card.length >= 40 && this.state.isLoad === false && <Btn addPages={this.addPages} />} 
+        {this.state.card.length >= 12 && this.state.isLoad === false && <Btn addPages={this.addPages} />} 
       </BasaStyled>
     );
   }
