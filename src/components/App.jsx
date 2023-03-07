@@ -13,40 +13,36 @@ export class App extends Component {
     page: 1,
     inputValue: null,
     isLoad: false,
-    onShow: false
+    onShow: false,
   };
 
   componentDidUpdate(prevStat, prevProp) {
-    if (prevProp.page !== this.state.page) {
-
+    if (prevProp.page !== this.state.page || prevProp.inputValue !== this.state.inputValue) {
       this.setState({ isLoad: true });
+
       fetchData(this.state.inputValue, this.state.page)
-        .then(cards =>
-          this.setState(preve => ({
-            card: [...preve.card, ...cards],
-            isLoad: false,
+        .then(cards => this.setState(preve => ({card: [...preve.card, ...cards],isLoad: false,
+          //  onShow: this.state.page < Math.ceil(cards.totalHits / 12),
           }))
         )
         .catch(error => console.log(error));
-
     }
-
   }
 
   FindPicteru = e => {
+    if (e.serch === '') {
+      alert('Enter a search name');
+    } else {
+      this.setState({ page: 1 });
+      this.setState({ isLoad: true });
+      this.setState({ card: [] });
+      this.setState(prev => ({ inputValue: e.serch }));
 
-if (e.serch === '') {
-alert('Enter a search name')
-} else {
-  this.setState({ page: 1 });
-this.setState({ isLoad: true });
-this.setState({ card: [] });
-this.setState(prev => ({ inputValue: e.serch }));
-
-fetchData(e.serch, 1)
-  .then(cards => this.setState({ card: [...cards], isLoad: false }))
-  .catch(error => console.log(error));
-  }}
+      // fetchData(e.serch, 1)
+      //   .then(cards => this.setState({ card: [...cards], isLoad: false }))
+      //   .catch(error => console.log(error));
+    }
+  };
 
   addPages = () => {
     this.setState(prevStat => ({ page: prevStat.page + 1 }));
@@ -57,8 +53,10 @@ fetchData(e.serch, 1)
       <BasaStyled>
         <Serchbar onSubmit={this.FindPicteru} />
         <GaleryImg img={this.state.card} />
-        {this.state.isLoad !== false &&(<Loader/>)}
-        {this.state.card.length >= 12 && this.state.isLoad === false && <Btn addPages={this.addPages} />} 
+        {this.state.isLoad !== false && <Loader />}
+        {this.state.card.length >= 12 && this.state.isLoad === false && (
+          <Btn addPages={this.addPages} />
+        )}
       </BasaStyled>
     );
   }
